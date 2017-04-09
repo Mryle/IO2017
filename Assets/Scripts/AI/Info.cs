@@ -1,26 +1,26 @@
 using UnityEngine;
-using System.Collections
+using System.Collections;
 
 public class Info : MonoBehaviour {
-	private String message; 
-	private Vector3 location;
+	private string message; 
+	private Vector3 position;
 	private float time;
 	
-	void Info(string message, Vector3 location, float time) {
+	public Info(string message, Vector3 position, float time) {
 		this.message = message;
-		this.location = location;
+		this.position = position;
 		this.time = time;
 	}
 	
-	string getMessage() {
+	public string getMessage() {
 		return this.message;
 	}
 	
-	Vector3 getlocation() {
-		return this.location;
+	public Vector3 getposition() {
+		return this.position;
 	}
 	
-	float date() {
-		return this.time;
+	public float date() {
+			return this.time;
 	}
 }
