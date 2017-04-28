@@ -11,7 +11,7 @@ public class UIMainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(playScene);
     }
-
+	
     public void Quit()
     {
         #if UNITY_EDITOR
