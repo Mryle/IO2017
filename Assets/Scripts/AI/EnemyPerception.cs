@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+<<<<<<< HEAD
 public enum AIPerceptionInformation { seenPlayer, heardPlayer };
 
 public struct Info {
@@ -15,6 +16,17 @@ public struct Info {
 		this.location = location;
 		this.time = time;
 		this.playerNumber = playerNumber;
+=======
+public struct Info {
+	public string message; 
+	public Vector3 location;
+	public float time;
+
+	public Info(string message, Vector3 location, float time) {
+		this.message = message;
+		this.location = location;
+		this.time = time;
+>>>>>>> 8b73297795af03dc9072359402862457e74f8ca8
 	}
 }
 
@@ -28,7 +40,10 @@ public class EnemyPerception : MonoBehaviour {
 	protected List<Info> infos = new List<Info>();
 	
 	void Start() {
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 8b73297795af03dc9072359402862457e74f8ca8
 		players =  GameObject.FindGameObjectsWithTag("Player");
 		StartCoroutine(Perception());
 	}
@@ -49,19 +64,31 @@ public class EnemyPerception : MonoBehaviour {
 					bool hit = Physics.Raycast(transform.position, rayDirection, out hitInfo, sightDistance);
 					// Player is seen
 					if (hit && hitInfo.transform.tag == "Player") {
+<<<<<<< HEAD
 						Info info = new Info(AIPerceptionInformation.seenPlayer, player.transform.position, Time.time, i);
 						infos.Add(info);
 						//print ("Player " + i + " seen");
+=======
+						Info info = new Info("Player " + i + " seen", player.transform.position, Time.time);
+						infos.Add(info);
+>>>>>>> 8b73297795af03dc9072359402862457e74f8ca8
 					}
 				}
 				/* Player is heard */
 				else if (distance < hearingDistance) {
+<<<<<<< HEAD
 					Info info = new Info(AIPerceptionInformation.heardPlayer, player.transform.position, Time.time, i);
 					infos.Add(info);
 					//print ("Player " + i + " heard");
 				}
 				i++;
 
+=======
+					Info info = new Info("Player " + i + " heard", player.transform.position, Time.time);
+					infos.Add(info);
+				}
+				i++;
+>>>>>>> 8b73297795af03dc9072359402862457e74f8ca8
 			}
 		}
 	}	
