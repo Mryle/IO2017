@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    Transform myTransform;
-
     public Transform followTransform;
+    [Tooltip("If set to true, it will initialize values from current game settings inside GameController.")]
+    public bool initializeFromCameraSettings = true;
     [Range(0.0f, 1.0f)]
-    public float followSpeed = 0.5f;
+    public float followSpeed = 0.05f;
+    [Range(0.0f, 50.0f)]
+    public float distance = 10.0f;
+    public Vector3 rotation = Vector3.zero;
+
+    private Transform myTransform;
 
     public void SetFollowTarget(GameObject obj)
     {
@@ -18,6 +23,14 @@ public class CameraFollow : MonoBehaviour
     void Awake()
     {
         myTransform = GetComponent<Transform>();
+
+        if (initializeFromCameraSettings)
+        {
+            var preset = GameController.Instance.gameSettings.cameraSettings.cameraPreset;
+            followSpeed = preset.followSpeed;
+            distance = preset.distance;
+            rotation = preset.rotation;
+        }
     }
 
     void Start()
@@ -34,9 +47,14 @@ public class CameraFollow : MonoBehaviour
         if (followTransform == null)
             return;
 
-        Vector3 offset = (followTransform.position - myTransform.position);
-        offset.y = 0; // Follow only in XZ
+        // Default position camera is directly above (up) the follow target
+        Vector3 toFollowTransform = -(Quaternion.Euler(rotation) * followTransform.up) * distance;
 
+        Vector3 targetPosition = followTransform.position - toFollowTransform;
+        Quaternion targetRotation = Quaternion.LookRotation(toFollowTransform);
+
+        Vector3 offset = (targetPosition - myTransform.position);
         myTransform.position += (offset * followSpeed * Time.timeScale);
+        myTransform.rotation = targetRotation;
     }
 }
